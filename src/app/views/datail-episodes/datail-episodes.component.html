@@ -1,6 +1,7 @@
 <app-header></app-header>
 
 <div class="all-audio-tracks" *ngFor="let podcast of podcasts; let i = index">
+  <img src="{{ podcast.img }}" />
   <div class="content">
     <h2>{{ podcast.title }}</h2>
     <div class="custom-audio-container">
@@ -11,13 +12,23 @@
         [src]="podcast.url"
       ></audio>
       <div class="botton-progress">
-        <div class="progress-container" (click)="setProgress($event, i)">
-          <div class="progress-bar" #progressBar></div>
+        <div class="container-time">
+          <div class="progress-container" (click)="setProgress($event, i)">
+            <div class="progress-bar" #progressBar></div>
+          </div>
+          <div class="time-display">{{ getCurrentTime(i) }}</div>
         </div>
-        <div class="time-display">{{ getCurrentTime(i) }}</div>
         <div class="button" (click)="toggleAudio(i)">
           <mat-icon
-            style="width: 100%; height: 100%; font-size: 70px;display: flex;justify-content: center; align-items: center; text-align: center;"
+            style="
+              width: 100%;
+              height: 100%;
+              font-size: 70px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              text-align: center;
+            "
             aria-hidden="false"
             [fontIcon]="isPlaying[i] ? 'pause' : 'play_arrow'"
           ></mat-icon>

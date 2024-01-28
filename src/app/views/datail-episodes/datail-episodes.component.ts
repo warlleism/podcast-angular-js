@@ -1,12 +1,6 @@
-// Import necessary modules
-import {
-  Component,
-  ViewChildren,
-  ElementRef,
-  QueryList,
-  AfterViewInit,
-} from '@angular/core';
+import { Component, ViewChildren, ElementRef, QueryList, AfterViewInit } from '@angular/core';
 import { Podcasts } from '../../data/podcasts';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-datail-episodes',
@@ -16,25 +10,34 @@ import { Podcasts } from '../../data/podcasts';
 export class DatailEpisodesComponent implements AfterViewInit {
   podcasts = Podcasts;
   isPlaying: boolean[] = new Array(this.podcasts.length).fill(false);
-  currentTimes: string[] = new Array(this.podcasts.length).fill('00:00'); // Added property for current times
+  currentTimes: string[] = new Array(this.podcasts.length).fill('00:00');
 
-  @ViewChildren('audioPlayer') audioPlayers!: QueryList<
-    ElementRef<HTMLAudioElement>
-  >;
-  @ViewChildren('progressBar') progressBars!: QueryList<
-    ElementRef<HTMLElement>
-  >;
+  @ViewChildren('audioPlayer') audioPlayers!: QueryList<ElementRef<HTMLAudioElement>>;
+  @ViewChildren('progressBar') progressBars!: QueryList<ElementRef<HTMLElement>>;
 
   ngAfterViewInit(): void {
-    this.setupAudioEventListeners();
+    let data = localStorage.getItem('type');
+    this.podcasts = this.podcasts.filter((e: any) => e.type === data);
+    setTimeout(() => {
+      this.setupAudioEventListeners();
+    }, 90);
   }
 
   setupAudioEventListeners(): void {
     this.audioPlayers.forEach((audioPlayer, index) => {
       const audio: HTMLAudioElement = audioPlayer.nativeElement;
 
+      const podcastId = this.podcasts[index].id; // Supondo que cada podcast tenha uma propriedade 'id'
+      const savedProgress = localStorage.getItem(`progress_${podcastId}`);
+
+      if (savedProgress) {
+        audio.currentTime = parseFloat(savedProgress);
+        this.updateProgressBar(audio, index);
+      }
+
       audio.addEventListener('timeupdate', () => {
         this.updateProgressBar(audio, index);
+        localStorage.setItem(`progress_${podcastId}`, audio.currentTime.toString());
       });
 
       audio.addEventListener('pause', () => {
@@ -48,8 +51,7 @@ export class DatailEpisodesComponent implements AfterViewInit {
   }
 
   toggleAudio(index: number): void {
-    const audio: HTMLAudioElement =
-      this.audioPlayers.toArray()[index].nativeElement;
+    const audio: HTMLAudioElement = this.audioPlayers.toArray()[index].nativeElement;
 
     if (audio.paused) {
       audio.play();
@@ -58,19 +60,18 @@ export class DatailEpisodesComponent implements AfterViewInit {
     }
   }
 
-  calculateProgress(audio: HTMLAudioElement): number {
-    return (audio.currentTime / audio.duration) * 100 || 0;
-  }
-
   updateProgressBar(audio: HTMLAudioElement, index: number): void {
-    const progressBar: HTMLElement =
-      this.progressBars.toArray()[index].nativeElement;
+    const progressBar: HTMLElement = this.progressBars.toArray()[index].nativeElement;
 
-    const progress = this.calculateProgress(audio);
+    const calculateProgress = (audio: HTMLAudioElement): number => {
+      return (audio.currentTime / audio.duration) * 100 || 0;
+    };
+
+    const progress = calculateProgress(audio);
     progressBar.style.width = `${progress}%`;
 
-    // Update current time property
-    this.currentTimes[index] = this.formatTime(audio.currentTime);
+    const currentTime = this.formatTime(audio.currentTime);
+    this.currentTimes[index] = currentTime;
   }
 
   setProgress(event: MouseEvent, index: number): void {
@@ -79,8 +80,7 @@ export class DatailEpisodesComponent implements AfterViewInit {
     const x = event.clientX - rect.left;
     const percentage = (x / rect.width) * 100;
 
-    const audio: HTMLAudioElement =
-      this.audioPlayers.toArray()[index].nativeElement;
+    const audio: HTMLAudioElement = this.audioPlayers.toArray()[index].nativeElement;
     audio.currentTime = (percentage / 100) * audio.duration;
     this.updateProgressBar(audio, index);
   }
