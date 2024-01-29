@@ -1,35 +1,27 @@
 <app-header />
-<div class="main-container">
-  <div class="list-all-podcasts">
-    <h2>PODCASTS</h2>
-    <div class="container-content">
-      <div class="card">
-        <img src="../../../assets/imgs/devaneio.png" />
-        <div class="text-content">
-          <div>12 episódios</div>
-          <div>PODCAST DEVANEIO</div>
-          <div>
-            PROGRAMA PARA AQUELES QUE DESEJAM OUVIR CONVERSA FIADA E OPINIÕES
-            SEM MUITO EMBASAMENTO DE ALGUÉM COM UMA CULTURA DE CARÁTER
-            QUESTIONÁVEL, QUE NEM MESMO VOCÊ CONHECE, MAS POR ALGUM MOTIVO,
-            APRECIA PROFUNDAMENTE.
+<div>
+  <h2>PODCASTS</h2>
+  <div class="main-container">
+    <div *ngFor="let podcast of podcasts">
+      <div class="list-all-podcasts">
+        <div class="container-content">
+          <div class="card">
+            <img src="{{ podcast.img }}" />
+            <div class="text-content">
+              <div>{{ podcast.eps }}</div>
+              <div>{{ podcast.name }}</div>
+              <div>
+                {{ podcast.desc }}
+              </div>
+              <div
+                (click)="setDetail(podcast.name.toLocaleLowerCase())"
+                class="button"
+                routerLink="/detail"
+              >
+                VER EPISÓDIOS
+              </div>
+            </div>
           </div>
-          <div (click)="setDetail('devaneio')" class="button" routerLink="/detail">VER EPISÓDIOS</div>
-        </div>
-      </div>
-      <div class="card">
-        <img src="../../../assets/imgs/metalcast.png" />
-        <div class="text-content">
-          <div>5 episódios</div>
-          <div>METALCAST</div>
-          <div>
-            O PODCAST PARA OS APAIXONADOS POR HEAVY METAL QUE BUSCAM OPINIÕES
-            SEM BASE E CONVERSAS IMPREVISÍVEIS. ENTRE RIFFS DESCONTROLADOS E
-            ANEDOTAS OBSCURAS, NOSSO PROGRAMA É UMA VIAGEM SONORA PELA
-            DESCONHECIDA CULTURA MEGADETHICA. JUNTE-SE A NÓS, ONDE O METAL
-            ENCONTRA O INESPERADO!
-          </div>
-          <div (click)="setDetail('metalcast')" class="button" routerLink="/detail">VER EPISÓDIOS</div>
         </div>
       </div>
     </div>

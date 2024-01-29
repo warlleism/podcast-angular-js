@@ -1,38 +1,31 @@
 interface Podcast {
   id: number;
-  title: string;
-  type: string;
-  url: string;
+  desc: string;
+  name: string;
   img: string;
+  eps: string;
 }
 
 export const Podcasts: Podcast[] = [
   {
     id: 1,
-    type: 'devaneio',
-    title: 'Devaneio Podcast - EP 01 - Vida de Dev Júnior',
-    url: '../../assets/podcasts/devaneio/podicast-ep-1.mp3',
+    eps: '12 episódios',
+    name: 'PODCAST DEVANEIO',
+    desc: 'PROGRAMA PARA AQUELES QUE DESEJAM OUVIR CONVERSA FIADA E OPINIÕES SEM MUITO EMBASAMENTO DE ALGUÉM COM UMA CULTURA DE CARÁTER QUESTIONÁVEL, QUE NEM MESMO VOCÊ CONHECE, MAS POR ALGUM MOTIVO, APRECIA PROFUNDAMENTE. ',
     img: '../../assets/imgs/devaneio.png',
   },
   {
     id: 2,
-    type: 'devaneio',
-    title: 'Devaneio Podcast - EP 02 - Solidão',
-    url: '../../assets/podcasts/devaneio/podicast-ep-2.mp3',
-    img: '../../assets/imgs/devaneio.png',
+    eps: '5 episódios',
+    name: 'METALCAST',
+    desc: 'O PODCAST PARA OS APAIXONADOS POR HEAVY METAL QUE BUSCAM OPINIÕES SEM BASE E CONVERSAS IMPREVISÍVEIS. ENTRE RIFFS DESCONTROLADOS E ANEDOTAS OBSCURAS, NOSSO PROGRAMA É UMA VIAGEM SONORA PELA DESCONHECIDA CULTURA MEGADETHICA. JUNTE-SE A NÓS, ONDE O METAL ENCONTRA O INESPERADO!',
+    img: '../../assets/imgs/metalcast.png',
   },
   {
     id: 3,
-    type: 'metalcast',
-    title: 'Metalcast - EP 01 - Megadeth vs Metallica',
-    url: '../../assets/podcasts/metalcast/podicast-ep-1.mp3',
-    img: '../../assets/imgs/metalcast.png',
-  },
-  {
-    id: 4,
-    type: 'metalcast',
-    title: 'Metalcast - EP 02 - Underground',
-    url: '../../assets/podcasts/metalcast/podicast-ep-1.mp3',
-    img: '../../assets/imgs/metalcast.png',
+    eps: '2 episódios',
+    name: 'BALADA NÃO DÁ XP',
+    desc: 'BEM-VINDO AO NOSSO PODCAST PARA OS FÃS DE GAMES QUE BUSCAM DISCUSSÕES INOVADORAS E ANÁLISES SEM LIMITES. EM MEIO A JOGADAS ÉPICAS E HISTÓRIAS FASCINANTES, OFERECEMOS UMA VIAGEM AUDITIVA PELO VASTO MUNDO GAMER. JUNTE-SE A NÓS, ONDE A PAIXÃO PELOS GAMES SE MISTURA À EMPOLGAÇÃO DO INESPERADO.',
+    img: '../../assets/imgs/jogandocast.png',
   },
 ];

@@ -1,8 +1,10 @@
 <app-header></app-header>
-
 <div class="all-audio-tracks" *ngFor="let podcast of podcasts; let i = index">
   <img src="{{ podcast.img }}" />
   <div class="content">
+    <h3 style="color: #fff; margin-bottom: 20px; font-weight: 400">
+      {{ podcast.date }}
+    </h3>
     <h2>{{ podcast.title }}</h2>
     <div class="custom-audio-container">
       <audio
@@ -33,6 +35,54 @@
             [fontIcon]="isPlaying[i] ? 'pause' : 'play_arrow'"
           ></mat-icon>
         </div>
+      </div>
+    </div>
+    <div style="display: flex">
+      <div
+        style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100px;
+          gap: 5px;
+        "
+      >
+        <mat-icon
+          (click)="skipBackward(i)"
+          aria-hidden="false"
+          [fontIcon]="'history'"
+          style="
+            color: #fff;
+            cursor: pointer;
+            width: 50px;
+            height: 50px;
+            font-size: 3rem;
+          "
+        ></mat-icon>
+        <div style="color: #fff; font-size: 1.5rem">-5s</div>
+      </div>
+      <div
+        style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100px;
+          gap: 5px;
+        "
+      >
+        <mat-icon
+          (click)="skipForward(i)"
+          aria-hidden="false"
+          [fontIcon]="'update'"
+          style="
+            color: #fff;
+            cursor: pointer;
+            width: 45px;
+            height: 50px;
+            font-size: 3rem;
+          "
+        ></mat-icon>
+        <div style="color: #fff; font-size: 1.5rem">+5s</div>
       </div>
     </div>
   </div>

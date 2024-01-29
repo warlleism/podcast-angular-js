@@ -1,6 +1,5 @@
 import { Component, ViewChildren, ElementRef, QueryList, AfterViewInit } from '@angular/core';
-import { Podcasts } from '../../data/podcasts';
-import { filter } from 'rxjs';
+import { PodcastsTracks } from '../../data/podcasts-tracks';
 
 @Component({
   selector: 'app-datail-episodes',
@@ -8,7 +7,8 @@ import { filter } from 'rxjs';
   styleUrls: ['./datail-episodes.component.scss'],
 })
 export class DatailEpisodesComponent implements AfterViewInit {
-  podcasts = Podcasts;
+  podcasts = PodcastsTracks;
+  skipSeconds = 5;
   isPlaying: boolean[] = new Array(this.podcasts.length).fill(false);
   currentTimes: string[] = new Array(this.podcasts.length).fill('00:00');
 
@@ -23,23 +23,31 @@ export class DatailEpisodesComponent implements AfterViewInit {
     }, 90);
   }
 
+  skipForward(index: number): void {
+    const audio: HTMLAudioElement = this.audioPlayers.toArray()[index].nativeElement;
+    audio.currentTime += this.skipSeconds;
+    this.updateProgressBar(audio, index);
+  }
+
+  skipBackward(index: number): void {
+    const audio: HTMLAudioElement = this.audioPlayers.toArray()[index].nativeElement;
+    audio.currentTime -= this.skipSeconds;
+    this.updateProgressBar(audio, index);
+  }
+
   setupAudioEventListeners(): void {
     this.audioPlayers.forEach((audioPlayer, index) => {
       const audio: HTMLAudioElement = audioPlayer.nativeElement;
-
       const podcastId = this.podcasts[index].id; // Supondo que cada podcast tenha uma propriedade 'id'
       const savedProgress = localStorage.getItem(`progress_${podcastId}`);
-
       if (savedProgress) {
         audio.currentTime = parseFloat(savedProgress);
         this.updateProgressBar(audio, index);
       }
-
       audio.addEventListener('timeupdate', () => {
         this.updateProgressBar(audio, index);
         localStorage.setItem(`progress_${podcastId}`, audio.currentTime.toString());
       });
-
       audio.addEventListener('pause', () => {
         this.isPlaying[index] = false;
       });
