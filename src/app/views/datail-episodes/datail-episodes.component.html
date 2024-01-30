@@ -1,89 +1,101 @@
+<!-- app-podcast-player.component.html -->
+
 <app-header></app-header>
-<div class="all-audio-tracks" *ngFor="let podcast of podcasts; let i = index">
-  <img src="{{ podcast.img }}" />
-  <div class="content">
-    <h3 style="color: #fff; margin-bottom: 20px; font-weight: 400">
-      {{ podcast.date }}
-    </h3>
-    <h2>{{ podcast.title }}</h2>
-    <div class="custom-audio-container">
-      <audio
-        style="display: none"
-        #audioPlayer
-        controls
-        [src]="podcast.url"
-      ></audio>
-      <div class="botton-progress">
-        <div class="container-time">
-          <div class="progress-container" (click)="setProgress($event, i)">
-            <div class="progress-bar" #progressBar></div>
+
+<div *ngIf="podcasts.length > 0; else noPodcasts">
+  <div class="all-audio-tracks" *ngFor="let podcast of podcasts; let i = index">
+    <img src="{{ podcast.img }}" />
+    <div class="content">
+      <h3 style="color: #fff; margin-bottom: 20px; font-weight: 400">
+        {{ podcast.date }}
+      </h3>
+      <h2>{{ podcast.title }}</h2>
+      <div class="custom-audio-container">
+        <audio
+          style="display: none"
+          #audioPlayer
+          controls
+          [src]="podcast.url"
+        ></audio>
+        <div class="botton-progress">
+          <div class="container-time" (click)="setProgress($event, i)">
+            <div class="progress-container">
+              <div class="progress-bar" #progressBar></div>
+            </div>
+            <div class="time-display">{{ getCurrentTime(i) }}</div>
           </div>
-          <div class="time-display">{{ getCurrentTime(i) }}</div>
+          <div class="button" (click)="toggleAudio(i)">
+            <mat-icon
+              style="
+                width: 100%;
+                height: 100%;
+                font-size: 70px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+              "
+              aria-hidden="false"
+              [fontIcon]="isPlaying[i] ? 'pause' : 'play_arrow'"
+            ></mat-icon>
+          </div>
         </div>
-        <div class="button" (click)="toggleAudio(i)">
+      </div>
+      <div style="display: flex">
+        <div
+          style="
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100px;
+            gap: 5px;
+          "
+        >
           <mat-icon
-            style="
-              width: 100%;
-              height: 100%;
-              font-size: 70px;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              text-align: center;
-            "
+            (click)="skipBackward(i)"
             aria-hidden="false"
-            [fontIcon]="isPlaying[i] ? 'pause' : 'play_arrow'"
+            [fontIcon]="'history'"
+            style="
+              color: #fff;
+              cursor: pointer;
+              width: 50px;
+              height: 50px;
+              font-size: 3rem;
+            "
           ></mat-icon>
+          <div style="color: #fff; font-size: 1.5rem">-5s</div>
         </div>
-      </div>
-    </div>
-    <div style="display: flex">
-      <div
-        style="
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 100px;
-          gap: 5px;
-        "
-      >
-        <mat-icon
-          (click)="skipBackward(i)"
-          aria-hidden="false"
-          [fontIcon]="'history'"
+        <div
           style="
-            color: #fff;
-            cursor: pointer;
-            width: 50px;
-            height: 50px;
-            font-size: 3rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100px;
+            gap: 5px;
           "
-        ></mat-icon>
-        <div style="color: #fff; font-size: 1.5rem">-5s</div>
-      </div>
-      <div
-        style="
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 100px;
-          gap: 5px;
-        "
-      >
-        <mat-icon
-          (click)="skipForward(i)"
-          aria-hidden="false"
-          [fontIcon]="'update'"
-          style="
-            color: #fff;
-            cursor: pointer;
-            width: 45px;
-            height: 50px;
-            font-size: 3rem;
-          "
-        ></mat-icon>
-        <div style="color: #fff; font-size: 1.5rem">+5s</div>
+        >
+          <mat-icon
+            (click)="skipForward(i)"
+            aria-hidden="false"
+            [fontIcon]="'update'"
+            style="
+              color: #fff;
+              cursor: pointer;
+              width: 45px;
+              height: 50px;
+              font-size: 3rem;
+            "
+          ></mat-icon>
+          <div style="color: #fff; font-size: 1.5rem">+5s</div>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+<ng-template #noPodcasts>
+  <div class="no-content">
+    <div>Conteúdo novo</div>
+    <div style="color: #ffe600;">em breve!</div>
+  </div>
+</ng-template>

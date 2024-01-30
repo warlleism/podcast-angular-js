@@ -1,3 +1,15 @@
+.no-content {
+  color: #fff;
+  font-size: 5rem;
+  text-transform: uppercase;
+  font-weight: 800;
+  position: absolute;
+  top: 50%;
+  text-align: center;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .all-audio-tracks {
   box-sizing: border-box;
   padding: 40px;
@@ -9,17 +21,42 @@
   margin-bottom: 20px;
   border-radius: 5px;
 
+  @media screen and (max-width: 858px) {
+    align-items: center;
+  }
+
   img {
     width: 400px;
     object-fit: cover;
     border-radius: 10px;
     box-shadow: 1px 4px 4px rgba(0, 0, 0, 0.446);
+
+    @media screen and (max-width: 1130px) {
+      width: 300px;
+    }
+
+    @media screen and (max-width: 858px) {
+      width: 150px;
+      height: 150px;
+      border-radius: 100px;
+    }
+
+    @media screen and (max-width: 640px) {
+      display: none;
+    }
   }
   .content {
     width: 100%;
     h2 {
       color: #fff;
       font-size: 2.5rem;
+
+      @media screen and (max-width: 1421px) {
+        font-size: 2rem;
+      }
+      @media screen and (max-width: 814px) {
+        font-size: 1.5rem;
+      }
     }
     audio {
       width: 500px;
@@ -39,6 +76,13 @@
           display: flex;
           align-items: center;
           gap: 10px;
+
+          @media screen and (max-width: 1421px) {
+            width: 90%;
+          }
+          @media screen and (max-width: 1130px) {
+            width: 80%;
+          }
         }
 
         .time-display {
@@ -57,7 +101,6 @@
         }
 
         .progress-bar {
-          height: 100%;
           height: 100%;
           background-color: #ffe600;
           transition: 0.1s ease-in-out;
@@ -86,6 +129,16 @@
           border-radius: 100px;
           color: #fff;
           transition: 0.5s ease-in-out;
+
+          @media screen and (max-width: 1319px) {
+            width: 80px;
+            height: 80px;
+          }
+
+          @media screen and (max-width: 413px) {
+            width: 70px;
+            height: 70px;
+          }
         }
         .button:hover {
           background-color: #7e001e;
