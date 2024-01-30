@@ -18,8 +18,8 @@
           [src]="podcast.url"
         ></audio>
         <div class="botton-progress">
-          <div class="container-time" (click)="setProgress($event, i)">
-            <div class="progress-container">
+          <div class="container-time" >
+            <div class="progress-container" (click)="setProgress($event, i)">
               <div class="progress-bar" #progressBar></div>
             </div>
             <div class="time-display">{{ getCurrentTime(i) }}</div>
