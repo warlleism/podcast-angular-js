@@ -8,6 +8,9 @@
   text-align: center;
   left: 50%;
   transform: translate(-50%, -50%);
+  @media screen and (max-width: 858px) {
+    font-size: 3rem;
+  }
 }
 
 .all-audio-tracks {
@@ -97,6 +100,7 @@
           cursor: pointer;
           border-radius: 5px;
           background-color: #ccc;
+          overflow: hidden;
           animation: progress 2s infinite ease-in-out;
         }
 
